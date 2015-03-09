@@ -1,0 +1,51 @@
+%!: /header.html
+<script type="text/javascript">
+var start, d = document;
+i = new Image(50,60);
+i.src = "spin.gif";
+function load() {
+  var img = d.getElementById("spin");
+  img.innerHTML = '&nbsp;';
+}
+function writeFlash() {
+  var r;
+  try { r = new XMLHttpRequest(); }
+  catch(e) {
+    try { r = new ActiveXObject("Msxml2.XMLHTTP"); }
+    catch(e) {
+      try { r = new ActiveXObject("Microsoft.XMLHTTP"); }
+      catch(e) {
+        alert("Your browser does not support AJAX!");
+        return false;
+      }
+    }
+  }
+  r.onreadystatechange = function() {
+    if(r.readyState == 1) {
+      var img = d.getElementById("spin");
+      img.innerHTML = '<img src="spin.gif">';
+    }
+    if(r.readyState == 4) {
+      var img = d.getElementById("spin");
+      img.innerHTML = 'took '  +
+                      ((new Date()).getTime() -  start.getTime()) / 1000 +
+                      ' seconds';
+      eval(r.responseText);
+     }
+  };
+  start = new Date();
+  r.open("GET", "/eeprom_write.shtml", true);
+  r.send(null);
+}
+</script>
+<h1>Contiki Node
+</h1>
+<span id="spin"> </span>
+</br>
+<h2>Flash Writing</h2>
+</br></br></br></br>
+<div class="wrapper">
+    <button class="button" onclick="writeFlash()" style="background-color:lightblue">Write To Flash</button>
+</div>
+</br></br></br></br></br></br>
+%!: /footer.html

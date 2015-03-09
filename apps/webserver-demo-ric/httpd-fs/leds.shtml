@@ -1,0 +1,37 @@
+%!: /header.html
+<script type="text/javascript">
+var start, d = document;
+
+function blinkLed(led) {
+  var r;
+  try { r = new XMLHttpRequest(); }
+  catch(e) {
+    try { r = new ActiveXObject("Msxml2.XMLHTTP"); }
+    catch(e) {
+      try { r = new ActiveXObject("Microsoft.XMLHTTP"); }
+      catch(e) {
+        alert("Your browser does not support AJAX!");
+        return false;
+      }
+    }
+  }
+  if(led == 1) {
+    r.open("GET", "/r_led.shtml", true);
+  } else if(led == 2) {
+    r.open("GET", "/g_led.shtml", true);
+  }else {
+    r.open("GET", "/b_led.shtml", true);
+  }
+  r.send(null);
+}
+</script>
+</br></br>
+<h2>Led Blinking</h2>
+</br></br></br></br></br>
+<ul id="social">
+    <li class="element"><button type="button" onclick="blinkLed('1')" style="background-color:red">RED</button> </li>
+    <li class="element"><button type="button" onclick="blinkLed('2')" style="background-color:lightgreen">GREEN</button> </li>
+    <li class="element"><button type="button" onclick="blinkLed('3')" style="background-color:blue">BLUE</button> </li>
+</ul>
+</br></br></br></br></br></br>
+%!: /footer.html
